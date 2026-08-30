@@ -19,7 +19,7 @@
       "platform": "web"
     }
   },
-  "license": "SEE LICENSE-IN-licenses",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "peerDependencies": {
     "@deepseek-ai/dsh-tools": ">=0.0.1-rc <2",
     "cordis": ">=4.0.0-rc <5"
