@@ -1,7 +1,24 @@
+# 依赖（junction 指向全局 DSH 包，不入库）
 node_modules/
+
+# 日志与临时文件
 *.log
-.DS_Store
-Thumbs.db
+npm-debug.log*
+yarn-error.log*
+*.bak
+*.tmp
+~$*
+
+# 凭据与私密（防御性：即使误放进来也不会被提交）
 credentials*.json
 .env
 .env.*
+
+# 编辑器
+.vscode/
+.idea/
+.history/
+
+# 系统
+.DS_Store
+Thumbs.db
