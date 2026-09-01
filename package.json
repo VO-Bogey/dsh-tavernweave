@@ -1,6 +1,6 @@
 {
   "name": "tavernweave-workbench",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TavernWeave 酒馆工作台：SillyTavern 制卡工程系统的 DSH 原生前端（技能导航/资料库/角色卡工坊/模拟酒馆侧栏）。PolyForm 非商业许可，随包保留 TavernWeave 版权声明。",
   "private": true,
   "type": "module",
@@ -13,15 +13,20 @@
   "dsh": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-runtime",
-        "@deepseek-ai/dsh-client-ui-slots"
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-input-trigger",
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-api-workspace-controller"
       ],
       "platform": "web"
     }
   },
   "license": "PolyForm-Noncommercial-1.0.0",
   "peerDependencies": {
-    "@deepseek-ai/dsh-tools": ">=0.0.1-rc <2",
-    "cordis": ">=4.0.0-rc <5"
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-tools": ">=0.1.2-alpha.2 <0.2.0"
   }
 }
