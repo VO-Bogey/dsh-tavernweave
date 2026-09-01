@@ -4,8 +4,8 @@ TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生适配与工作台*
 
 - `tavernweave-native`：独立的 DSH 用户 Agent Preset，保留标准模式的工具面，
   向模型运行时提供 TavernWeave 上游完整 20 个 Skill 与 Host Front Door；
-- `tavernweave-workbench`：DSH 会话内制卡入口、Soul 口令、技能状态、资料库与
-  JSON 角色卡工坊。
+- `tavernweave-workbench`：DSH 会话内制卡入口、Soul 口令、实时技能状态、资料库与
+  可持续的角色卡制卡工作台。
 
 与官方 TW Lite 的关系：TavernWeave 仓库的 `host-adapters/dsh` 是
 **Developer Preview 的离线候选**。本项目的 `tavernweave-native` 不从
@@ -39,7 +39,7 @@ DSH 不允许更换 preset。
 
 ## 使用
 
-- 「✦ 酒馆」按钮 → 打开工作台面板（口令速查 / 技能状态 / 资料库 / 角色卡工坊 / 模拟酒馆路线图）
+- 「✦ 酒馆」按钮 → 打开工作台面板（口令速查 / 技能状态 / 资料库 / 制卡工作台）
 - 面板收回：右上角「×」、点击面板外、Esc
 - 会话 dock 会明确提示当前会话是否已使用原生工坊；Soul 头像和“从零写卡 / 改造旧卡”会把内容直接插入 DSH 输入框。
 - 设置页：白名单下拉添加、面板位置、默认 Soul 人格与自动补全。
@@ -48,9 +48,16 @@ DSH 不允许更换 preset。
 
 - [x] M1/M2：工作台、主题适配、白名单、资料库与使用说明
 - [x] 会话内制卡 dock、Soul 三头像、多口令直接插入、JSON 结构盘点与组件草稿编辑
+- [x] 制卡项目持久化：记录来源、阶段、版本、草稿与验收状态，可从列表继续编辑
 - [x] DSH 0.1.2 原生 preset：完整 20 Skill 目录、Skill loader、Host Front Door、标准工具面
 - [ ] M3：真实 SillyTavern 内的资产导入/运行验收（不是 DSH 页面验收）
-- [ ] M4：模拟酒馆；按项目约定暂缓
+- [ ] 模拟酒馆：按项目约定暂缓，待核心制卡闭环完成后再参考公开插件
+
+## 工作台职责
+
+- **技能状态**：目录可用数与当前会话实际通过 `skill` 工具加载过的 Skill 分开显示；“已加载”没有观察到调用时会明确标注，而不是伪装成全部激活。
+- **制卡工作台**：每次盘点 JSON 卡片会建立或更新本地项目记录（保存于 DSH 用户数据目录，不覆盖原文件），可选择项目草稿、修改阶段、版本号，并保留“待真实酒馆验收”这一交付门。
+- **资料库**：原作者 TavernWeave 的离线知识快照浏览与确定性检索入口，包含工程检查单、SillyTavern 指南、设计/动效参考和来源台账；它不是私有 RAG，也不替代 `consult-tavernweave-library` 的模型路由。
 
 ## 诚实口径
 
