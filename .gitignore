@@ -5,6 +5,7 @@ coverage/
 .dsh/
 
 # 日志与临时文件
+tmp/
 *.log
 npm-debug.log*
 yarn-error.log*

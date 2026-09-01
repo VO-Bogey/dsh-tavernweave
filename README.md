@@ -1,68 +1,62 @@
 # TavernWeave Workbench（tavernweave-workbench）
 
-TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生前端插件**。
-在 DSH 里提供「🍺 酒馆」入口面板：按阵营分层的原作者使用口令速查、
-技能安装状态、资料库查询（规划中）、模拟酒馆（规划中）。
+TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生适配与工作台**。
+
+- `tavernweave-native`：独立的 DSH 用户 Agent Preset，保留标准模式的工具面，
+  向模型运行时提供 TavernWeave 上游完整 20 个 Skill 与 Host Front Door；
+- `tavernweave-workbench`：DSH 会话内制卡入口、Soul 口令、技能状态、资料库与
+  JSON 角色卡工坊。
 
 与官方 TW Lite 的关系：TavernWeave 仓库的 `host-adapters/dsh` 是
-**Skill loader 预设候选**（让 DSH 装载 TW 的 20 个 Skill），本插件走的是
-**DSH 原生前端**路线（conversation UI 面板 + 设置页），两者互补不冲突。
+**Developer Preview 的离线候选**。本项目的 `tavernweave-native` 不从
+`TW Lite Full / Entry` 派生：它以 DSH 0.1.2 的标准 Agent 组装为基线，
+由 DSH 原生 Skill filesystem / tool-skill 加载上游 Skill；工作台继续独立承担 UI。
 
 ## 开发环境
 
-- DSH v0.1.1-rc.2（本地 web 实例，http://127.0.0.1:3080）
-- dsh-super-injector v0.3.3（插件注入器，提供 dev_* 工具与 /super-injector/api）
+- DSH v0.1.2-alpha.2（本地 web 实例，默认 `http://127.0.0.1:31808`）
 - TavernWeave 仓库（与插件同级目录：`../TavernWeave`）
 
 ## 安装到 DSH
 
-插件由 dsh-super-injector 注入运行，安装 = 两处登记 + 一个目录链接：
+### 工作台插件
 
-1. **源码目录**：`tavernweave-plugin/`（本仓库）。
+插件通过 DSH profile 的 `tavernweave-workbench` link 载入。设置页中把目标工作区
+加入白名单后，侧栏与会话输入区会出现「✦ 酒馆」。
 
-2. **依赖 junction**（指向全局 DSH 内嵌的官方包，解析 `@deepseek-ai/*`）：
-   ```powershell
-   New-Item -ItemType Junction `
-     -Path "$env:USERPROFILE\.dsh\profiles\web\node_modules\tavernweave-workbench" `
-     -Target "D:\...\tavernweave-plugin"
-   ```
+### 原生 Agent Preset
 
-3. **注入器登记**：`C:\Users\WY\.dsh\super-injector\registry.json` 加入条目：
-   ```json
-   { "dir": "D:\\...\\tavernweave-plugin", "name": "tavernweave-workbench", "at": "<ISO时间>" }
-   ```
-   重启 DSH 后注入器按 registry 自动注入（host ✓ client ✓）。
+在项目根目录运行：
 
-4. **运行时热更**（不重启）：
-   ```powershell
-   Invoke-RestMethod -Method POST http://127.0.0.1:3080/super-injector/api/uninstall `
-     -ContentType "application/json" -Body '{"match":"tavernweave"}'
-   Invoke-RestMethod -Method POST http://127.0.0.1:3080/super-injector/api/inject `
-     -ContentType "application/json" -Body '{"dir":"D:\\...\\tavernweave-plugin"}'
-   ```
+```powershell
+pwsh -File .\scripts\install-native-adapter.ps1
+```
 
-5. **设置**：DSH 设置 → TavernWeave 分区。工作区白名单非空时，
-   侧栏底部与输入区出现「🍺 酒馆」按钮；留空则完全不显示。
+脚本会创建 `~/.dsh/skills/tavernweave`（上游 `skills/` 的 junction）和
+`~/.dsh/.agent-presets/tavernweave-native`（用户 preset）。随后**新建会话**，在
+DSH 的 Agent Preset 选择器中选择“**TavernWeave 原生工坊**”。已有会话一旦产生内容，
+DSH 不允许更换 preset。
 
 ## 使用
 
-- 「🍺 酒馆」按钮 → 打开工作台面板（使用说明 / 技能状态 / 资料库 / 角色卡工坊 / 模拟酒馆）
+- 「✦ 酒馆」按钮 → 打开工作台面板（口令速查 / 技能状态 / 资料库 / 角色卡工坊 / 模拟酒馆路线图）
 - 面板收回：右上角「×」、点击面板外、Esc
-- 使用说明页：ST / 非ST 两大阵营 × 每阵营 3 小类的口令速查，点条目复制发送内容
-- 设置页：白名单、面板位置、默认人格、资料库来源、自动补全、侧栏模型
+- 会话 dock 会明确提示当前会话是否已使用原生工坊；Soul 头像和“从零写卡 / 改造旧卡”会把内容直接插入 DSH 输入框。
+- 设置页：白名单下拉添加、面板位置、默认 Soul 人格与自动补全。
 
 ## 里程碑
 
-- [x] M1 骨架：host/client 双面、注入链路、路由、状态工具
-- [x] M2 使用说明页（两层分类）+ 设置页表单
-- [ ] M2 剩余：资料库查询界面
-- [ ] M3 模拟酒馆侧栏、默认人格、自动补全
-- [ ] M4 打磨验收：工作区路径匹配、真实 SillyTavern 验收
+- [x] M1/M2：工作台、主题适配、白名单、资料库与使用说明
+- [x] 会话内制卡 dock、Soul 三头像、多口令直接插入、JSON 结构盘点与组件草稿编辑
+- [x] DSH 0.1.2 原生 preset：完整 20 Skill 目录、Skill loader、Host Front Door、标准工具面
+- [ ] M3：真实 SillyTavern 内的资产导入/运行验收（不是 DSH 页面验收）
+- [ ] M4：模拟酒馆；按项目约定暂缓
 
 ## 诚实口径
 
-所有功能标注「离线候选」：未做真实 SillyTavern 验收、未通过官方 DSH
-兼容性矩阵验证。技能状态只反映本地目录存在性，不代表运行时可用。
+已验证：DSH 0.1.2 真实运行时可发现 20 个 TavernWeave Skill，并可由模型调用
+`tavern-card-builder`。这证明 DSH 原生适配链路；不等同于 MVU、状态栏、世界书、
+正则、Tavern Helper 或开场流程已在真实 SillyTavern 验收。后者仍是独立门。
 
 ## 许可证
 
