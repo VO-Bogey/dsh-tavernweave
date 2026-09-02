@@ -1,6 +1,6 @@
 {
   "name": "tavernweave-workbench",
-  "version": "0.2.0",
+  "version": "0.3.0-beta.1",
   "description": "TavernWeave 酒馆工作台：DSH 原生 Agent preset、20 个 TavernWeave Skill 与会话内制卡工作台。PolyForm 非商业许可，随包保留 TavernWeave 版权声明。",
   "private": true,
   "type": "module",
