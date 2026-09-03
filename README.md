@@ -18,7 +18,32 @@ TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生适配与工作台*
 `TW Lite Full / Entry` 派生：它以 DSH 0.1.2 的标准 Agent 组装为基线，
 由 DSH 原生 Skill filesystem / tool-skill 加载上游 Skill；工作台继续独立承担 UI。
 
-## 功能
+## 特色功能
+
+本工作台适合在 DSH 里创建 SillyTavern 酒馆角色卡的用户使用，无需编程基础。
+
+- **写卡进度展示**：会话顶部显示当前卡的制卡阶段（需求、设定、世界书、
+  状态栏、导出验收等），完成一项更新一项，可直接看到进度
+- **Soul 与口令**：阿瞳、MTTT.sir、灵魂杀手三种教学/审阅风格一键切换；
+  常用制卡口令按分类检索，一键插入会话
+- **复用 DSH 原生功能**：目标记录、提问确认、方案审阅、产出文件等
+  使用 DSH 自带的界面，不重复实现
+- **状态栏预览**：按卡片的实际变量即时渲染状态栏效果，支持桌面/窄屏
+  切换，确认后再导出
+- **材料登记**：TXT/Markdown 材料可拆分章节、标记事实与推断、
+  记录进度，支持中断后继续
+
+## 适配的 DSH 版本
+
+| DSH 版本 | 状态 | 说明 |
+| --- | --- | --- |
+| `0.1.1-rc.2` | 接口兼容 | 静态接口面审核通过，未真机运行 |
+| `0.1.2-alpha.2` | 真机验证通过 | 开发与验收基线 |
+| `0.1.2-alpha.4 及以上` | 不兼容 | Session API 由 `events` 改为 `snapshotEvents`，需先做兼容适配 |
+
+详细适配说明见 [docs/dsh-native-adapter.md](docs/dsh-native-adapter.md)。
+
+## 功能细节（供深入阅读）
 
 ### 会话内制卡入口
 
@@ -41,7 +66,6 @@ TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生适配与工作台*
 
 - DSH v0.1.2-alpha.2（本地 web 实例）
 - TavernWeave 仓库（与插件同级目录：`../TavernWeave`，也可安装时用 `-TavernWeaveRoot` 指定）
-- 兼容声明：DSH `0.1.1-rc.2` 静态接口面审核通过（未真机运行）；DSH `0.1.2-alpha.4+` 未适配（Session API 由 `events` 改为 `snapshotEvents`），详见 [docs/dsh-native-adapter.md](docs/dsh-native-adapter.md)。
 
 ## 安装到 DSH
 
