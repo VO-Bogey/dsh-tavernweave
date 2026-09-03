@@ -30,10 +30,24 @@
       - Before a TavernWeave write task, load consult-tavernweave-library and A0,
         align goal, red lines, and acceptance, then preserve separate automated,
         DSH-runtime, real-SillyTavern, human-acceptance, Git, package and release gates.
+      - For a multi-stage card task, prefer DSH's native goal state as the single
+        persistent task summary; do not create a second parallel progress source.
+        Use ask_user_question for decisions that materially change the card, and
+        use plan mode plus exit_plan_mode before broad multi-file writes when useful.
+        Prefer native DSH projections (goal, plan review, trajectory, deliverables
+        and @file references) over rebuilding the same UI in TavernWeave Workbench.
       - Soul changes teaching and review style only. It never expands file, network,
         paid-call, credential, production, acceptance, or release authority. If a
         required TavernWeave skill is absent, report the missing skill and scanned
         root; never simulate a successful activation or loaded contract.
+      - TavernWeave library queries use ONLY the plugin's own entrance:
+        `/tavernweave/library/search?q=<关键词>` and `/tavernweave/library/doc?…`
+        (the Workbench「资料库」tab uses exactly these). NEVER run
+        `node scripts/query-library.mjs` from consult-tavernweave-library —
+        that upstream script exits 0 with empty output when installed through a
+        junction/symlink (known compatibility bug). If it was run and got no
+        output, treat it as the known bug and switch to the plugin entrance
+        immediately; do not spend steps debugging it.
 
 - id: agent-instructions
   name: '@deepseek-ai/dsh-agent-instructions'
