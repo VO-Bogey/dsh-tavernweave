@@ -4,6 +4,15 @@
 
 它以 DSH 0.1.2 的标准 Agent 运行时为基线，保留文件系统、Shell、网页、目标、计划、压缩、待办、子代理和工作流能力，并通过 `dsh-skill-filesystem` 的专用根目录发现 TavernWeave 上游 20 个 Skill。现有 `tavernweave-workbench` 插件仍负责会话 UI、Soul 入口、资料库和角色卡工坊；preset 负责模型真正看到的工具、提示词和 Skill。
 
+## 适配的 DSH 版本（声明）
+
+| DSH 版本 | 状态 | 说明 |
+| --- | --- | --- |
+| **0.1.2-alpha.2** | ✅ 真机验证（首通测试通过） | 本项目主力运行与验收基线；npm 上 alpha 通道当前已到 `0.1.2-alpha.5` |
+| **0.1.1-rc.2** | ✅ 静态接口面审核通过（未真机运行） | 官方 `latest` 稳定版；与本项目使用的接口（`session.events`、`session/event` 事件、客户端注入模块、主题 token）兼容 |
+
+**不兼容声明**：DSH **0.1.2-alpha.4 及以上**（含 alpha.5）尚未适配——该版本将 Session API 由 `events` 改为 `snapshotEvents`，本项目 `lib/index.js` 的技能状态重放（`session.events`）会失效。升级到 alpha.4+ 前需先完成兼容适配（改 `snapshotEvents` + 全量回归）。
+
 ## 安装
 
 在本项目根目录执行：
