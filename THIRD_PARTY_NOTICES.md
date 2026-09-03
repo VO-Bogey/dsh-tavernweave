@@ -28,7 +28,7 @@ Copyright 2026 LiarMTTT。
   注册宿主工具与前端槽位；只引用官方包名与配置键做互操作，不 vendoring
   DSH 应用、包源码、预设、模型或凭据。
 - DSH 当前为 Developer Preview，接口可能破坏性变更；本插件版本须与所用
-  DSH 构建（本仓库开发基准：v0.1.1-rc.2）一起声明，运行时兼容性以实测为准。
+  DSH 构建（本仓库开发基准：v0.1.2-alpha.2）一起声明，运行时兼容性以实测为准。
 
 ## SillyTavern
 
