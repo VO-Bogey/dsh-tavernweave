@@ -45,12 +45,33 @@ TavernWeave 制卡系统的 **DeepSeek Harness（DSH）原生适配与工作台*
 
 ## 安装到 DSH
 
-### 工作台插件
+### 让 DSH 帮你安装（复制下方提示词发给 DSH）
+
+选择一个工作目录，复制下面这段发给 DSH：
+```text
+帮我安装 TavernWeave 工作台（dsh-tavernweave）。步骤：
+
+1. 在工作目录下克隆本项目（https://github.com/VO-Bogey/dsh-tavernweave）
+   和上游 TavernWeave（https://github.com/LiarMTTT/TavernWeave），两者放同级。
+2. 在本项目目录运行：pwsh -File .\scripts\install-native-adapter.ps1
+   （若 TavernWeave 不在默认的上一级同级目录，用 -TavernWeaveRoot <路径> 指定）。
+3. 用 dsh plugin --profile web add <本项目目录> 把工作台插件装进 web profile。
+4. 完成后告诉我：重启 DSH，新建会话时在 Agent Preset 选择器选
+   「TavernWeave 原生工坊」，然后在设置页把要用的工作区加入白名单，
+   侧栏就会出现「✦ 酒馆」。
+
+注意：每一步先做再汇报；遇到报错把错误贴给我并停下来问，不要绕过；
+不要修改我没让你碰的目录和文件。
+```
+
+### 手动安装
+
+#### 工作台插件
 
 插件通过 DSH profile 的 `tavernweave-workbench` link 载入。设置页中把目标工作区
 加入白名单后，侧栏与会话输入区会出现「✦ 酒馆」。
 
-### 原生 Agent Preset
+#### 原生 Agent Preset
 
 在项目根目录运行：
 
